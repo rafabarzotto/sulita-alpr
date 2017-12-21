@@ -9,6 +9,7 @@ var io = require('socket.io').listen(server, {
   log: false,
   origins: '*:*'
 })
+
 var sys = require('sys'),
   exec = require('child_process').exec;
 
@@ -26,23 +27,31 @@ app.get('/check_plate', function(req, res) {
   res.send('É nessario informar a operação')
 });
 
+var pictures = function(req, res){
+    console.log(req.url);
+
+    PythonShell.run('cont.py', function(err, data){
+     if(err) console.log(err);
+     console.log(data.toString());
+    });
+};
+
 //route to handle a client calling node to check a plage
-app.get('/check_plate/:id', function(req, res) {
-  var op = req.params.id;
+app.get('/check_plate/:id', function(req, res, next){
 
   var options = {
-    args: [op]
+    args: [req.params.id]
   };
 
-  PythonShell.run('take_recognize.py', options, function(err, results) {
-    if (err) res.send(err);
-    // results is an array consisting of messages collected during execution
-    console.log('results: %j', results);
-    res.json('results: %j', results);
+  PythonShell.run('take_recognize.py', options, function(err, data){
+    if(err) res.send(err);
+    res.send(data.toString());
+    next();
   });
 
 });
 
+app.use(pictures);
 
 var server = app.listen(3000, function() {
   console.log('Server listening on port 3000');
