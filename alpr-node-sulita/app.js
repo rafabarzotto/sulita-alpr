@@ -27,24 +27,24 @@ app.get('/check_plate', function(req, res) {
   res.send('É nessario informar a operação')
 });
 
-var pictures = function(req, res){
-    console.log(req.url);
+var pictures = function(req, res) {
+  console.log(req.url);
 
-    PythonShell.run('cont.py', function(err, data){
-     if(err) console.log(err);
-     console.log(data.toString());
-    });
+  PythonShell.run('cont.py', function(err, data) {
+    if (err) console.log(err);
+    console.log(data.toString());
+  });
 };
 
 //route to handle a client calling node to check a plage
-app.get('/check_plate/:id', function(req, res, next){
+app.get('/check_plate/:id', function(req, res, next) {
 
   var options = {
     args: [req.params.id]
   };
 
-  PythonShell.run('take_recognize.py', options, function(err, data){
-    if(err) res.send(err);
+  PythonShell.run('take_recognize.py', options, function(err, data) {
+    if (err) res.send(err);
     res.send(data.toString());
     next();
   });
