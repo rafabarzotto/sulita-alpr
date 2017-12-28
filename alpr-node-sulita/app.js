@@ -10,7 +10,6 @@ var sys = require('sys'),
 
 
 var pictures = function(req, res) {
-  console.log(res.locals['plate']);
   if (res.locals['plate'] == "NOK" || res.locals['plate'] == "Arquivo nao encontrado" || res.locals['plate'] == undefined) {
     console.log("Nao capturar fotos");
   } else {
@@ -43,10 +42,10 @@ app.get('/check_plate', function(req, res) {
 app.get('/log', function(req, res) {
   fs.readFile('/usr/local/bin/plateservice/plate_log.log', function(err, data) {
     if (err) {
-      res.send("Could not open file: %s", err);
-      process.exit(1);
+      res.send("Could not open file:");
+    } else {
+      res.json(data.toString('utf8'));
     }
-    res.json(data.toString('utf8'));
   });
 });
 

@@ -21,7 +21,7 @@ if not alpr.is_loaded():
 alpr.set_top_n(10)
 alpr.set_default_region("md")
 
-dataAtual = datetime.datetime.now().strftime("%d-%m-%Y")
+dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
 op = sys.argv[1]
 
@@ -49,10 +49,10 @@ def take():
 				break
 	except URLError as e:
 	    print('Problema na Camera ')
-	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y %H:%M") + " - " + 'Problema na Camera do LPR')
+	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y-%H:%M") + " - " + 'Problema na Camera do LPR')
 	except HTTPError as e:
 	    print('Problema na Camera ')
-	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y %H:%M") + " - " + 'Problema na Camera do LPR')		
+	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y-%H:%M") + " - " + 'Problema na Camera do LPR')		
 
 def reconhece():
 	list_of_files = glob.glob('/home/pi/img/*') # * means all if need specific format then *.csv

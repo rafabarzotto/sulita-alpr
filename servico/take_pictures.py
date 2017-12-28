@@ -11,7 +11,7 @@ from urllib2 import Request, URLError, HTTPError
 
 logging.basicConfig(filename='/usr/local/bin/plateservice/plate_log.log',level=logging.DEBUG)
 
-dataAtual = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
+dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
 def take(codOp, placa, cam):
 	#url = 'http://admin:3566@192.168.255.87/axis-cgi/mjpg/video.cgi?camera1'
