@@ -34,8 +34,8 @@ def take(codOp, placa, url, cam):
 		    #if cv2.waitKey(1) == 27:
 			if os.path.exists('/home/pi/img/cameras/'+codOp+'_'+placa+'_'+dataAtual+'_Cam'+cam+'.jpg'):
 				condicao = False
-				print('File Save Success - Wait 4 seconds')
-				time.sleep(4)
+				print('File Save Success - Wait 3 seconds')
+				time.sleep(3)
 				break
 	except URLError as e:
 	    print('Problema na Camera ' + cam)

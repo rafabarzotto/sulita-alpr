@@ -1,0 +1,80 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+    style(type='text/css').
+      .b1 {
+      border: solid 8px #ccc;
+      width: 400px;
+      height: 120px;
+      border-radius: 10px;
+      text-align: center;
+      }
+      .b2 {
+      border: solid 2px #ccc;
+      width: 380px;
+      height: 20px;
+      border-radius: 5px;
+      margin: 10px auto;
+      }
+      .b3 {
+      font-size: 18px;
+      margin-top: 2px;
+      }
+      .bb2, .bb3 {
+      border: solid 1px #ccc;
+      background-color: #ccc;
+      width: 4px;
+      height: 4px;
+      border-radius: 2px;
+      margin: 7px 7px;
+      }
+      .bb2 {
+      left: 5px;
+      float: left;
+      }
+      .bb3 {
+      right: 5px;
+      float: right;
+      }
+      button{
+      display:block;
+      text-decoration:none;
+      width: 200px;
+      height: 60px;
+      margin: 5px;
+      border:1px solid #ccc;
+      background-color:#f2f2f2;
+      color:#333;
+      font:15px arial, sans-serif;
+      }
+  body 
+      .b1
+        .b2
+          .bb2
+          |             Cidade - UF
+          .bb3
+        .b3
+          h1= message
+    .divButtons      
+    button(onclick="home()") Home API 
+    button(onclick="check()") Checar Placa 
+    button(onclick="logs()") Logs 
+    button(onclick="rmlogs()") Limpar Logs 
+    button(onclick="conf()") Testar Confidência
+script.
+  function home() {
+    window.location.href = '/'
+  }
+  function check() {
+    window.location.href = '/check_plate'
+  }   
+  function logs() {
+    window.location.href = '/log'
+  }   
+  function rmlogs() {
+    window.location.href = '/rmlog'
+  }   
+  function conf() {
+    window.location.href = '/confidence'
+  }        

@@ -23,8 +23,6 @@ alpr.set_default_region("md")
 
 dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
-op = sys.argv[1]
-
 def take():
 	#url = 'http://admin:3566@192.168.255.87/axis-cgi/mjpg/video.cgi?camera1'
 	url = 'http://192.168.250.98:81/video.mjpg'
@@ -71,12 +69,12 @@ def reconhece():
 			i = 0
 			for plate in results['results']:
 					i += 1
-					#print("   %12s %12s" % ("Plate", "Confidence"))
+					print("   %12s %12s" % ("Plate", "Confidence"))
 					for candidate in plate['candidates']:
 						prefix = "-"
 						if candidate['matches_template']:
 							prefix = "*"
-							#print("  %s %12s%12f" % (prefix, candidate['plate'], candidate['confidence']))
+							print("  %s %12s%12f" % (prefix, candidate['plate'], candidate['confidence']))
 							lista.extend([{'placa': candidate['plate'], 'confidencia': candidate['confidence']}])
 
 			if not lista:
