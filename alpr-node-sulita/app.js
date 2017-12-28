@@ -19,7 +19,7 @@ var pictures = function(req, res) {
   } else {
     console.log("Salvando Fotos - Aguarde");
     var options = {
-      args: [res.locals['op'], res.locals['plate']]
+      args: [res.locals['codEstab'], res.locals['op'], res.locals['etq'], res.locals['plate']]
     };
 
     PythonShell.run('cont.py', options, function(err, data) {
@@ -42,7 +42,7 @@ PythonShell.defaultOptions = {
 };
 
 app.get('/check_plate', function(req, res) {
-  res.send('É nessario informar a operação')
+  res.send('É nessario informar /codEstab/op/etiqueta');
 });
 
 app.get('/log', function(req, res) {
@@ -76,18 +76,20 @@ app.get('/confidence', function(req, res) {
 });
 
 //route to handle a client calling node to check a plage
-app.get('/check_plate/:id', function(req, res, next) {
+app.get('/check_plate/:codEstab/:op/:etq', function(req, res, next) {
 
-  var options = {
-    args: [req.params.id]
-  };
+  // var options = {
+  //   args: [req.params.id]
+  // };
 
-  PythonShell.run('take_recognize.py', options, function(err, data) {
+  PythonShell.run('take_recognize.py', function(err, data) {
     if (err) {
       res.send(err);
     } else {
       res.send(data.toString());
-      res.locals.op = req.params.id;
+      res.locals.codEstab = req.params.codEstab;
+      res.locals.op = req.params.op;
+      res.locals.etq = req.params.etq;
       res.locals.plate = data.toString();
       next();
     }

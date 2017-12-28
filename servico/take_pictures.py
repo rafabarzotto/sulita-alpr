@@ -13,7 +13,9 @@ logging.basicConfig(filename='/usr/local/bin/plateservice/plate_log.log',level=l
 
 dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
-def take(codOp, placa, url, cam):
+dirRemoto = '/home/pi/img/cameras'
+
+def take(estab, codOp, etq, placa, url, cam):
 	#url = 'http://admin:3566@192.168.255.87/axis-cgi/mjpg/video.cgi?camera1'
 	#url = 'http://192.168.250.98:81/video.mjpg'
 	#url = 'http://177.202.199.87:81/video.mjpg'
@@ -21,6 +23,10 @@ def take(codOp, placa, url, cam):
 	    stream=urllib2.urlopen(url, timeout=3)
 	    bytes=''
 	    condicao = True
+	    try:
+	    	os.makedir(dirRemoto+'/'+estab+'/'+codOp+'/'+etq)
+	    except OSError:
+	    	print('Diretorio já existe')	
 	    while True:
 		    bytes+=stream.read(1024)
 		    a = bytes.find('\xff\xd8')
@@ -29,10 +35,10 @@ def take(codOp, placa, url, cam):
 			jpg = bytes[a:b+2]
 			bytes= bytes[b+2:]
 			i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
-			cv2.imwrite('/home/pi/img/cameras/'+codOp+'_'+placa+'_'+dataAtual+'_Cam'+cam+'.jpg', i)
+			cv2.imwrite(dirRemoto+'/'+estab+'/'+codOp+'/'+etq+'/'+placa+'_'+'_Cam'+cam+'.jpg', i)
 			time.sleep(3)
 		    #if cv2.waitKey(1) == 27:
-			if os.path.exists('/home/pi/img/cameras/'+codOp+'_'+placa+'_'+dataAtual+'_Cam'+cam+'.jpg'):
+			if os.path.exists(dirRemoto+'/'+estab+'/'+codOp+'/'+etq+'/'+placa+'_'+'_Cam'+cam+'.jpg'):
 				condicao = False
 				print('File Save Success - Wait 3 seconds')
 				time.sleep(3)

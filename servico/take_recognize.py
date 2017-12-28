@@ -23,8 +23,6 @@ alpr.set_default_region("md")
 
 dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
-op = sys.argv[1]
-
 def take():
 	#url = 'http://admin:3566@192.168.255.87/axis-cgi/mjpg/video.cgi?camera1'
 	url = 'http://192.168.250.98:81/video.mjpg'
