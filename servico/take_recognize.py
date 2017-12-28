@@ -48,10 +48,10 @@ def take():
 				reconhece()
 				break
 	except URLError as e:
-	    print('Problema na Camera ')
+	    print('Problema na Camera')
 	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y-%H:%M") + " - " + 'Problema na Camera do LPR')
 	except HTTPError as e:
-	    print('Problema na Camera ')
+	    print('Problema na Camera')
 	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y-%H:%M") + " - " + 'Problema na Camera do LPR')		
 
 def reconhece():

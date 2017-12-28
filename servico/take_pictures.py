@@ -13,9 +13,9 @@ logging.basicConfig(filename='/usr/local/bin/plateservice/plate_log.log',level=l
 
 dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
-def take(codOp, placa, cam):
+def take(codOp, placa, url, cam):
 	#url = 'http://admin:3566@192.168.255.87/axis-cgi/mjpg/video.cgi?camera1'
-	url = 'http://192.168.250.98:81/video.mjpg'
+	#url = 'http://192.168.250.98:81/video.mjpg'
 	#url = 'http://177.202.199.87:81/video.mjpg'
 	try:
 	    stream=urllib2.urlopen(url, timeout=3)
@@ -38,10 +38,10 @@ def take(codOp, placa, cam):
 				time.sleep(4)
 				break
 	except URLError as e:
-	    print('Problema na Camera ')
-	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y %H:%M") + " - " + 'Problema na Camera ')
+	    print('Problema na Camera ' + cam)
+	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y %H:%M") + " - " + 'Problema na Camera ' + cam)
 	except HTTPError as e:
-	    print('Problema na Camera ')
-	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y %H:%M") + " - " + 'Problema na Camera')
+	    print('Problema na Camera ' + cam)
+	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y %H:%M") + " - " + 'Problema na Camera ' + cam)
 
 #take('2', 'MDA123', '2')

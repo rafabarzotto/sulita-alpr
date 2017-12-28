@@ -10,7 +10,7 @@ var sys = require('sys'),
 
 
 var pictures = function(req, res) {
-  if (res.locals['plate'] == "NOK" || res.locals['plate'] == "Arquivo nao encontrado" || res.locals['plate'] == undefined) {
+  if (res.locals['plate'] == "NOK" || res.locals['plate'] == "Arquivo nao encontrado" || res.locals['plate'] == undefined || res.locals['plate'] == "Problema na Camera") {
     console.log("Nao capturar fotos");
   } else {
     console.log("Salvando Fotos - Aguarde");
