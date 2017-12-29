@@ -13,9 +13,12 @@ app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(cors());
 
-var pictures = function(req, res) {
-  if (res.locals['plate'] == "NOK" || res.locals['plate'] == "Arquivo nao encontrado" || res.locals['plate'] == undefined || res.locals['plate'] == "Problema na Camera") {
+var pictures = function(req, res, next) {
+  if (res.locals['plate'] == "NOK" || res.locals['plate'] == "Arquivo nao encontrado" || res.locals['plate'] == "Problema na Camera") {
     console.log("Nao capturar fotos");
+  } else if (res.locals['plate'] == undefined) {
+    console.log("Erro de Rota");
+    next();
   } else {
     console.log("Salvando Fotos - Aguarde");
     var options = {
@@ -50,7 +53,7 @@ app.get('/log', function(req, res) {
     if (err) {
       res.send("Nao foi possivel localizar ou abrir o Arquivo");
     } else {
-      res.json(data.toString('utf8'));
+      res.send(data.toString('utf8'));
     }
   });
 });
@@ -78,10 +81,6 @@ app.get('/confidence', function(req, res) {
 //route to handle a client calling node to check a plage
 app.get('/check_plate/:codEstab/:op/:etq', function(req, res, next) {
 
-  // var options = {
-  //   args: [req.params.id]
-  // };
-
   PythonShell.run('take_recognize.py', function(err, data) {
     if (err) {
       res.send(err);
@@ -96,11 +95,11 @@ app.get('/check_plate/:codEstab/:op/:etq', function(req, res, next) {
   });
 });
 
+app.use(pictures);
+
 app.use(function(req, res, next) {
   res.status(404).send('Erro 404 essa URL não existe!');
 });
-
-app.use(pictures);
 
 var server = app.listen(3000, function() {
   console.log('Server listening on port 3000');

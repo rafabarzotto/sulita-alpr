@@ -5,6 +5,7 @@ import datetime
 import time
 import cv2
 import sys
+import base64
 import urllib2
 import numpy as np
 import logging
@@ -24,10 +25,14 @@ alpr.set_default_region("md")
 dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
 def take():
-	#url = 'http://admin:3566@192.168.255.87/axis-cgi/mjpg/video.cgi?camera1'
 	url = 'http://192.168.250.98:81/video.mjpg'
+	username = 'admin'
+	password = '3566'
+	request = urllib2.Request(url)
+	base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+	request.add_header("Authorization", "Basic %s" % base64string)
 	try:
-		stream=urllib2.urlopen(url, timeout=3)
+		stream=urllib2.urlopen(request, timeout=3)
 		bytes=''
 		condicao = True
 		while True:
@@ -94,5 +99,5 @@ def reconhece():
 		else:
 			print "Arquivo nao encontrado"
 
-take()
-#reconhece()
+#take()
+reconhece()

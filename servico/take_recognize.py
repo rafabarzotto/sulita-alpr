@@ -5,6 +5,7 @@ import datetime
 import time
 import cv2
 import sys
+import base64
 import urllib2
 import numpy as np
 import logging
@@ -25,9 +26,14 @@ dataAtual = datetime.datetime.now().strftime("%d-%m-%Y-%H:%M")
 
 def take():
 	#url = 'http://admin:3566@192.168.255.87/axis-cgi/mjpg/video.cgi?camera1'
-	url = 'http://192.168.250.98:81/video.mjpg'
+	url = 'http://177.202.199.87:81/video.mjpg'
+	username = 'admin'
+	password = '3566'
+	request = urllib2.Request(url)
+	base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+	request.add_header("Authorization", "Basic %s" % base64string)
 	try:
-		stream=urllib2.urlopen(url, timeout=3)
+		stream=urllib2.urlopen(request, timeout=3)
 		bytes=''
 		condicao = True
 		while True:
@@ -50,7 +56,7 @@ def take():
 	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y-%H:%M") + " - " + 'Problema na Camera do LPR')
 	except HTTPError as e:
 	    print('Problema na Camera')
-	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y-%H:%M") + " - " + 'Problema na Camera do LPR')		
+	    logging.info(datetime.datetime.now().strftime("%d-%m-%Y-%H:%M") + " - " + 'Problema na Camera do LPR')
 
 def reconhece():
 	list_of_files = glob.glob('/home/pi/img/*') # * means all if need specific format then *.csv
